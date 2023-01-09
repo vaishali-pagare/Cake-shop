@@ -1,0 +1,15 @@
+{%extends "homepage.html"%}
+{%block content%}
+
+<form method="post">
+    {%csrf_token%}
+    <table class="table">
+        <tr> <td> Cake id</td>
+        <td> Cake Name </td></tr>
+        <tr> <td> {{cakes.id}} </td>
+            <td> {{cakes.pname}} </td></tr>
+        <tr><td><button type="submit" class="btn btn-success"> Next </button></td></tr>
+
+    </table>
+</form>
+{%endblock%}

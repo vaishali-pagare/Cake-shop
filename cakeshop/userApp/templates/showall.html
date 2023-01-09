@@ -1,0 +1,75 @@
+{%extends "homepage.html"%}
+
+{%block content%}
+<script type="text/javascript">
+    function getconfirm(myid)
+    {
+       result =  confirm("Are you sure want to delete(y/n)?");
+       if(result)
+       {
+        form = document.getElementById(myid);
+        form.action="/removeItem"
+        form.submit();
+      
+       }
+    }
+    function increment(myid)
+    {
+        id = parseInt(document.getElementById(myid).value);
+        if(id<10)
+        {
+            id= id+1;
+            
+            (document.getElementById(myid).value) = id;
+        }
+    }
+    function decrement(myid)
+    {
+        id = parseInt(document.getElementById(myid).value);
+        if(id>1)
+        {
+            id= id-1;
+           
+            (document.getElementById(myid).value) = id;
+        }
+    }
+
+
+</script>
+<center>
+<h2> Cart Details</h2>
+
+<table class="table">
+    <tr>
+        <th> CAKE NAME</th>
+        <th> DISCRIPTION </th>
+        <th> QTY </th>
+        <TH> PRICE</TH>
+        <th> SUB TOTAL </th>
+    </tr>
+
+    {%for item in mycart%}
+    <form method="post" id="myform{{item.cake.id}}">
+        {% csrf_token %}
+    <tr>
+    <td><input type="hidden" name="cakeid" value="{{item.cake.id}}">
+         {{item.cake.pname}}</td>
+    <td> {{item.cake.description}}</td> 
+    <td> 
+    <button type="button" class="btn btn-primary" onclick="decrement('qty{{item.cake.id}}')"> - </button> 
+    <input type="text" name="qty" id="qty{{item.cake.id}}" value="{{item.qty}}" size=1 >
+    <button type="button" class="btn btn-primary" onclick="increment('qty{{item.cake.id}}')"> + </button> 
+    <button type="submit" class="btn btn-danger" name="action" value="Update" > Update</button>
+</td>
+    <td> {{item.cake.price}}</td>
+    <td> {%widthratio item.qty 1 item.cake.price%} </td>
+    <td> <button type="button" class="btn btn-danger" onclick="getconfirm('myform{{item.cake.id}}')" name="action" value="Remove"> Remove </button></td>
+    </form>
+     </tr>
+    {%endfor%}
+</table>
+ <h3> Total : {{request.session.total}}</h3> 
+ <hr/>
+ <a href="/payment" class="btn btn-success"> Proceed to make Payment</a>
+</center>
+{%endblock%}

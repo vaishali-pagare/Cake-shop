@@ -1,0 +1,30 @@
+{%extends "homepage.html"%}
+
+{%block content%}
+<center>
+<h2> Cart Details</h2>
+
+<table class="table">
+    <tr>
+        <th> CAKE NAME</th>
+        <th> DISCRIPTION </th>
+        <th> QTY </th>
+        <TH> PRICE</TH>
+        <th> SUB TOTAL </th>
+    </tr>
+
+    {%for item in mycart%}
+    <tr>
+    <td> {{item.cake.pname}}</td>
+    <td> {{item.cake.description}}</td>
+    <td> {{item.qty}}</td>
+    <td> {{item.cake.price}}</td>
+    <td> {%widthratio item.qty 1 item.cake.price%} </td>
+    <td><a href=/remove/{{item.id}}> <button type="submit" class="btn btn-danger"> Remove </button></a> </td>
+     
+     </tr>
+    {%endfor%}
+</table>
+ <h3> Total : {{request.session.total}}</h3> 
+</center>
+{%endblock%}
